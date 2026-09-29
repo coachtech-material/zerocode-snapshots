@@ -16,7 +16,8 @@ NAMES="3-1 3-2 3-3 4-1 4-2 4-3 4-4 4-5 4-6"
 ITEMS="app routes resources/views database bootstrap/app.php bootstrap/providers.php AGENTS.md CLAUDE.md config/app.php composer.json"
 
 stop() {
-  printf '\n%s\n' "$@" >&2
+  printf '\n' >&2
+  printf '%s\n' "$@" >&2
   exit 1
 }
 
@@ -104,7 +105,8 @@ if [ -n "$LOOK" ]; then
 fi
 
 fail() {
-  printf '\n%s\n' \
+  printf '\n' >&2
+  printf '%s\n' \
     "chat-app を置き直しましたが、動くかの確かめで止まりました。" \
     "置き直す前の形は、次の場所に控えてあります。" \
     "  $BACKUP" \
@@ -141,12 +143,13 @@ php artisan optimize:clear >>"$WORK/log" 2>&1 || fail "php artisan optimize:clea
 php artisan about >>"$WORK/log" 2>&1 || fail "php artisan about"
 
 # 10. 結果
-printf '\n%s\n' "「${TITLE}」の章の終わりの形に戻しました。" \
+printf '\n'
+printf '%s\n' "「${TITLE}」の章の終わりの形に戻しました。" \
   "置き直す前の形は、$BACKUP に控えました。" \
   "AI を起動していたら、起動し直してください。" \
   "ブラウザで開き直してください。"
 case "$STATE" in
-  3-3) printf '%s\n' "チャット画面で、名前 ゆい・メッセージ 名前つきで送れました を1件送ってください。" ;;
+  3-3) printf '%s\n' "チャット画面で、名前に「ゆい」、メッセージに「名前つきで送れました」と入れて、1件送ってください。" ;;
   4-3 | 4-4 | 4-5 | 4-6) printf '%s\n' "入室していた名前は消えるので、入り直してください。" ;;
 esac
 printf '%s\n' "このあと保存の儀式をしておきましょう。"
