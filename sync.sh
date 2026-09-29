@@ -115,7 +115,7 @@ fail() {
     "----------" \
     "戻すコマンド（$STATE）のあと、$1 で止まりました。" \
     "控え: $BACKUP" >&2
-  tail -n 8 "$WORK/log" >&2
+  grep -v '^Xdebug:' "$WORK/log" | tail -n 8 >&2 || true
   printf '%s\n' "----------" >&2
   exit 1
 }
